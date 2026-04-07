@@ -1,0 +1,358 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.demo-wrap{display:flex;gap:16px;align-items:flex-start;justify-content:center;padding:8px 0;}
+.frame{border:1.5px solid var(--color-border-secondary);border-radius:16px;overflow:hidden;background:var(--color-background-tertiary);flex-shrink:0;}
+.frame-label{text-align:center;font-size:11px;color:var(--color-text-secondary);margin-bottom:6px;font-weight:500;}
+.screen{background:#f4f6f8;overflow:hidden;}
+.hdr{background:#1a3a5c;color:#fff;padding:8px 12px;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:space-between;}
+.hdr-sub{font-size:9px;opacity:0.7;margin-top:1px;}
+.stat-row{display:flex;gap:4px;padding:6px 8px;background:#fff;border-bottom:0.5px solid #e0e4e8;}
+.stat-box{flex:1;background:#f4f6f8;border-radius:6px;padding:4px 6px;text-align:center;}
+.stat-n{font-size:16px;font-weight:600;}
+.stat-l{font-size:8px;color:#666;}
+.tbl-wrap{overflow-y:auto;background:#fff;}
+.tbl{width:100%;border-collapse:collapse;font-size:9px;}
+.tbl th{background:#f0f4f8;padding:4px 5px;text-align:left;font-weight:500;color:#555;border-bottom:0.5px solid #ddd;position:sticky;top:0;}
+.tbl td{padding:4px 5px;border-bottom:0.5px solid #eee;color:#222;}
+.tbl tr.done td{background:#f5f5f5;color:#aaa;text-decoration:line-through;}
+.tbl tr.hit td{background:#e8f4fd;}
+.tbl tr.warn td{background:#fff8e1;}
+.tbl tr.danger td{background:#fff0f0;}
+.badge{font-size:8px;padding:1px 5px;border-radius:4px;white-space:nowrap;}
+.ok{background:#e6f4ea;color:#1e6e2e;}
+.warn{background:#fff3cd;color:#856404;}
+.danger{background:#fde8e8;color:#9b1c1c;}
+.done-b{background:#eee;color:#888;}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:6px;background:#fff;border-top:0.5px solid #e0e4e8;}
+.key{background:#f0f4f8;border:0.5px solid #d0d8e0;border-radius:6px;font-size:14px;font-weight:500;padding:10px 0;cursor:pointer;text-align:center;color:#222;transition:background 0.1s,transform 0.08s;user-select:none;}
+.key:active,.key.pressed{background:#d8e8f8;transform:scale(0.93);}
+.key-sm{font-size:10px;color:#e53935;}
+.key-del{font-size:12px;color:#666;}
+.disp-area{background:#fff;border-top:0.5px solid #e0e4e8;padding:6px 10px;display:flex;align-items:center;gap:8px;}
+.disp{font-family:monospace;font-size:22px;font-weight:600;letter-spacing:6px;color:#1a3a5c;min-width:80px;}
+.msg-area{flex:1;font-size:9px;line-height:1.4;padding:4px 6px;border-radius:4px;}
+.msg-ok{background:#e6f4ea;color:#1e6e2e;}
+.msg-warn{background:#fff3cd;color:#856404;}
+.msg-err{background:#fde8e8;color:#9b1c1c;}
+.msg-done{background:#f0f0f0;color:#666;}
+.summary-panel{background:#fff;border-top:0.5px solid #e0e4e8;padding:6px 10px;}
+.summary-title{font-size:9px;font-weight:600;color:#1a3a5c;margin-bottom:4px;}
+.summary-row{font-size:8px;color:#444;margin-bottom:2px;}
+.btn-summary{background:#1a3a5c;color:#fff;border:none;border-radius:5px;font-size:8px;padding:4px 8px;cursor:pointer;width:100%;margin-top:4px;}
+</style>
+
+<div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;text-align:center;">同じデータ・同じロジック — デバイスに合わせてレイアウトが変わります</div>
+
+<div class="demo-wrap" id="demo-wrap">
+
+  <!-- PC版 -->
+  <div>
+    <div class="frame-label">PC / RasPi モニター</div>
+    <div class="frame" style="width:360px;">
+      <div class="screen">
+        <div class="hdr">
+          <div><div>消火器点検システム</div><div class="hdr-sub">新潟県の架空の高校 — 2026年4月</div></div>
+          <div style="font-size:9px;opacity:0.8;">INOUE WORKS</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-n" id="pc-done" style="color:#1e6e2e;">0</div><div class="stat-l">点検済み</div></div>
+          <div class="stat-box"><div class="stat-n" id="pc-remain" style="color:#e65100;">63</div><div class="stat-l">未点検</div></div>
+          <div class="stat-box"><div class="stat-n" id="pc-warn" style="color:#9b1c1c;">0</div><div class="stat-l">要対応</div></div>
+          <div class="stat-box"><div class="stat-n">63</div><div class="stat-l">合計</div></div>
+        </div>
+        <div style="display:flex;height:280px;">
+          <div style="flex:1;overflow:hidden;">
+            <div class="tbl-wrap" style="height:280px;">
+              <table class="tbl">
+                <thead><tr><th>No.</th><th>場所</th><th>番号</th><th>年</th><th>判定</th></tr></thead>
+                <tbody id="pc-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div style="width:130px;border-left:0.5px solid #e0e4e8;">
+            <div class="disp-area" style="flex-direction:column;align-items:stretch;padding:8px;">
+              <div style="font-size:8px;color:#666;margin-bottom:3px;">下3桁入力</div>
+              <div class="disp" id="pc-disp">_ _ _</div>
+            </div>
+            <div class="keypad" style="gap:4px;padding:6px;">
+              <div class="key" onclick="kp('pc','7')">7</div><div class="key" onclick="kp('pc','8')">8</div><div class="key" onclick="kp('pc','9')">9</div>
+              <div class="key" onclick="kp('pc','4')">4</div><div class="key" onclick="kp('pc','5')">5</div><div class="key" onclick="kp('pc','6')">6</div>
+              <div class="key" onclick="kp('pc','1')">1</div><div class="key" onclick="kp('pc','2')">2</div><div class="key" onclick="kp('pc','3')">3</div>
+              <div class="key key-del" onclick="kd('pc')">⌫</div><div class="key" onclick="kp('pc','0')">0</div><div class="key key-sm" onclick="kc('pc')">CLR</div>
+            </div>
+            <div id="pc-msg" class="msg-area" style="margin:0 6px 4px;min-height:36px;"></div>
+            <div class="summary-panel" id="pc-summary" style="display:none;">
+              <div class="summary-title">点検完了サマリー</div>
+              <div class="summary-row" id="pc-s1"></div>
+              <div class="summary-row" id="pc-s2"></div>
+              <div class="summary-row" id="pc-s3"></div>
+            </div>
+            <div style="padding:0 6px 6px;">
+              <button onclick="undo('pc')" style="width:100%;font-size:8px;padding:4px;background:#f0f4f8;border:0.5px solid #ccc;border-radius:4px;cursor:pointer;margin-bottom:3px;">↩ 直前取消</button>
+              <button onclick="showSummary('pc')" class="btn-summary">完了サマリー表示</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- タブレット版 -->
+  <div>
+    <div class="frame-label">タブレット（縦）</div>
+    <div class="frame" style="width:200px;">
+      <div class="screen">
+        <div class="hdr">
+          <div><div style="font-size:10px;">消火器点検</div><div class="hdr-sub">新潟夢見る高校</div></div>
+        </div>
+        <div class="stat-row" style="padding:4px 6px;">
+          <div class="stat-box"><div class="stat-n" id="tb-done" style="color:#1e6e2e;font-size:14px;">0</div><div class="stat-l">済</div></div>
+          <div class="stat-box"><div class="stat-n" id="tb-remain" style="color:#e65100;font-size:14px;">63</div><div class="stat-l">残</div></div>
+          <div class="stat-box"><div class="stat-n" id="tb-warn" style="color:#9b1c1c;font-size:14px;">0</div><div class="stat-l">要対応</div></div>
+        </div>
+        <div class="disp-area" style="padding:5px 8px;">
+          <div class="disp" id="tb-disp" style="font-size:18px;letter-spacing:4px;">_ _ _</div>
+          <div id="tb-msg" class="msg-area" style="font-size:8px;"></div>
+        </div>
+        <div class="keypad" style="gap:3px;padding:5px;">
+          <div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','7')">7</div><div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','8')">8</div><div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','9')">9</div>
+          <div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','4')">4</div><div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','5')">5</div><div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','6')">6</div>
+          <div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','1')">1</div><div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','2')">2</div><div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','3')">3</div>
+          <div class="key key-del" style="padding:9px 0;" onclick="kd('tb')">⌫</div><div class="key" style="padding:9px 0;font-size:16px;" onclick="kp('tb','0')">0</div><div class="key key-sm" style="padding:9px 0;" onclick="kc('tb')">CLR</div>
+        </div>
+        <div class="tbl-wrap" style="height:200px;">
+          <table class="tbl">
+            <thead><tr><th>No.</th><th>場所</th><th>番号</th><th>判定</th></tr></thead>
+            <tbody id="tb-tbody"></tbody>
+          </table>
+        </div>
+        <div style="padding:4px 6px;">
+          <button onclick="showSummary('tb')" class="btn-summary">完了したらここ！</button>
+        </div>
+        <div class="summary-panel" id="tb-summary" style="display:none;">
+          <div class="summary-title">点検完了サマリー</div>
+          <div class="summary-row" id="tb-s1"></div>
+          <div class="summary-row" id="tb-s2"></div>
+          <div class="summary-row" id="tb-s3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- スマホ版 -->
+  <div>
+    <div class="frame-label">スマホ（緊急時参照）</div>
+    <div class="frame" style="width:145px;">
+      <div class="screen">
+        <div class="hdr" style="padding:6px 8px;">
+          <div><div style="font-size:9px;">消火器点検</div><div class="hdr-sub">中越夢見る学校</div></div>
+        </div>
+        <div class="disp-area" style="padding:5px 7px;background:#1a3a5c;">
+          <div class="disp" id="sp-disp" style="font-size:20px;letter-spacing:6px;color:#7dd3fc;">_ _ _</div>
+        </div>
+        <div id="sp-msg" class="msg-area" style="margin:4px 6px;min-height:28px;font-size:8px;"></div>
+        <div class="keypad" style="gap:3px;padding:5px;">
+          <div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','7')">7</div><div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','8')">8</div><div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','9')">9</div>
+          <div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','4')">4</div><div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','5')">5</div><div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','6')">6</div>
+          <div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','1')">1</div><div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','2')">2</div><div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','3')">3</div>
+          <div class="key key-del" style="padding:12px 0;" onclick="kd('sp')">⌫</div><div class="key" style="padding:12px 0;font-size:18px;" onclick="kp('sp','0')">0</div><div class="key key-sm" style="padding:12px 0;" onclick="kc('sp')">CLR</div>
+        </div>
+        <div style="padding:4px 5px;font-size:8px;color:#666;text-align:center;">
+          <span id="sp-done">0</span>済 / <span id="sp-remain">63</span>残
+        </div>
+        <div class="tbl-wrap" style="height:130px;">
+          <table class="tbl">
+            <thead><tr><th>No.</th><th>場所</th><th>状態</th></tr></thead>
+            <tbody id="sp-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="font-size:11px;color:var(--color-text-secondary);text-align:center;margin-top:8px;">3台とも同じデータ — どれで入力しても全台に反映（実際はBLE or LAN同期）</div>
+
+<script>
+const THIS_YEAR=2026;
+const raw=[
+  [1,"1F","教務室前廊下","ハツタ",2018,"141134"],[2,"1F","事務室前廊下","ハツタ",2019,"072625"],
+  [3,"1F","印刷用具室内","ハツタ",2018,"141139"],[4,"1F","保健室前廊下","ハツタ",2019,"072675"],
+  [5,"1F","技術員室","ハツタ",2018,"141148"],[6,"1F","進路指導室前廊下","ハツタ",2018,"141142"],
+  [7,"1F","休養室","ハツタ",2018,"141079"],[8,"1F","購買室前","ハツタ",2018,"141160"],
+  [9,"1F","吉商会館","ハツタ",2019,"072661"],[10,"1F","教室棟廊下","ハツタ",2019,"072609"],
+  [11,"1F","教室棟廊下","ハツタ",2019,"072564"],[12,"1F","教室棟廊下","ハツタ",2019,"072497"],
+  [13,"1F","格技場","ハツタ",2019,"072548"],[14,"1F","屋外危険物","ハツタ",2018,"141138"],
+  [15,"1F","屋外危険物","ハツタ",2018,"009862"],[16,"1F","特別教室棟","ハツタ",2019,"012998"],
+  [17,"1F","調理室","ハツタ",2019,"072601"],[18,"1F","屋外危険物","ハツタ",2018,"141144"],
+  [19,"1F","屋外危険物","ハツタ",2018,"141068"],[20,"1F","実習棟準備室","ハツタ",2019,"072676"],
+  [21,"1F","実習棟廊下","ハツタ",2019,"072608"],[22,"1F","実習棟廊下","ハツタ",2019,"072557"],
+  [23,"1F","体育館","ハツタ",2019,"072554"],[24,"1F","体育館","ハツタ",2019,"072677"],
+  [25,"1F","体育館教官室","ハツタ",2019,"072628"],[26,"1F","体育館ステージ脇","ハツタ",2019,"072611"],
+  [27,"1F","講堂","ハツタ",2019,"072669"],[28,"1F","講堂","ハツタ",2019,"072618"],
+  [29,"1F","講堂","ハツタ",2019,"072550"],[30,"2F","管理棟廊下","ハツタ",2018,"141158"],
+  [31,"2F","化学実習室","ハツタ",2018,"141163"],[32,"2F","化学準備室","ハツタ",2018,"141098"],
+  [33,"2F","管理棟廊下","ハツタ",2018,"141097"],[34,"2F","管理棟廊下","ハツタ",2018,"141072"],
+  [35,"2F","管理棟廊下","ハツタ",2018,"141077"],[36,"2F","教室棟廊下","ハツタ",2019,"072559"],
+  [37,"2F","教室棟廊下","ハツタ",2019,"072655"],[38,"2F","特別棟廊下","ハツタ",2019,"072563"],
+  [39,"2F","特別棟廊下","ハツタ",2019,"072659"],[40,"2F","体育館2階","ハツタ",2019,"072653"],
+  [41,"2F","体育館2階","ハツタ",2019,"072606"],[42,"2F","講堂","ハツタ",2019,"072656"],
+  [43,"2F","講堂","ハツタ",2019,"072610"],[44,"2F","実習棟準備室","ハツタ",2019,"072657"],
+  [45,"2F","実習棟廊下","ハツタ",2019,"072624"],[46,"2F","実習棟廊下","ハツタ",2019,"072626"],
+  [47,"3F","管理棟廊下","ハツタ",2018,"141086"],[48,"3F","物理実習室","ハツタ",2018,"141140"],
+  [49,"3F","物理準備室","ハツタ",2018,"141095"],[50,"3F","管理棟廊下","ハツタ",2018,"140444"],
+  [51,"3F","管理棟廊下","ハツタ",2018,"141132"],[52,"3F","教室棟廊下","ハツタ",2019,"072613"],
+  [53,"3F","教室棟廊下","ハツタ",2019,"072496"],[54,"3F","特別教室棟廊下","ハツタ",2019,"013138"],
+  [55,"3F","特別教室棟廊下","ハツタ",2019,"072604"],[56,"3F","実習棟廊下","ハツタ",2019,"072651"],
+  [57,"3F","実習棟準備室","ハツタ",2019,"072660"],[58,"3F","実習棟総合実習室","ハツタ",2019,"072562"],
+  [59,"4F","教室棟廊下","ハツタ",2019,"072612"],[60,"4F","教室棟廊下","ハツタ",2019,"072558"],
+  [61,"PH","特別教室棟","ハツタ",2019,"072565"],[62,"PH","実習棟","ハツタ",2019,"072555"],
+  [63,"PH","実習棟","ハツタ",2019,"072617"]
+];
+
+const data=raw.map(r=>({no:r[0],floor:r[1],place:r[2],maker:r[3],mfgYear:r[4],serial:r[5],suffix:r[5].slice(-3),done:false}));
+const state={pc:"",tb:"",sp:""};
+const lastDone={pc:null,tb:null,sp:null};
+const ids=["pc","tb","sp"];
+
+function age(y){return THIS_YEAR-y;}
+function judgeClass(y){const a=age(y);return a>=10?"danger":a>=8?"warn":"";}
+function judgeLabel(y){const a=age(y);return a>=10?"耐圧必要":a>=8?"要注意":"正常";}
+function judgeBadge(y,done){
+  if(done)return '<span class="badge done-b">済</span>';
+  const a=age(y);
+  if(a>=10)return '<span class="badge danger">耐圧必要</span>';
+  if(a>=8)return '<span class="badge warn">要注意</span>';
+  return '<span class="badge ok">正常</span>';
+}
+
+function renderAll(hlSuffix,src){
+  ids.forEach(id=>{
+    const tbody=document.getElementById(id+"-tbody");
+    if(!tbody)return;
+    tbody.innerHTML=data.map(r=>{
+      const jc=judgeClass(r.mfgYear);
+      const isHit=hlSuffix&&r.suffix===hlSuffix&&!r.done&&src===id;
+      const rc=r.done?"done":isHit?"hit":jc;
+      const serialDisp=isHit
+        ?r.serial.slice(0,-3)+'<strong style="color:#1a6fce;">'+r.suffix+'</strong>'
+        :r.serial;
+      if(id==="sp"){
+        return`<tr class="${rc}" ${isHit?'onclick="pick('+r.no+',\'sp\')" style="cursor:pointer;"':''}>
+          <td>${r.no}</td><td style="font-size:8px;">${r.place.length>6?r.place.slice(0,6)+'…':r.place}</td>
+          <td>${judgeBadge(r.mfgYear,r.done)}</td></tr>`;
+      }else if(id==="tb"){
+        return`<tr class="${rc}" ${isHit?'onclick="pick('+r.no+',\'tb\')" style="cursor:pointer;"':''}>
+          <td>${r.no}</td><td style="font-size:8px;">${r.place.length>7?r.place.slice(0,7)+'…':r.place}</td>
+          <td style="font-family:monospace;">${serialDisp}</td>
+          <td>${judgeBadge(r.mfgYear,r.done)}</td></tr>`;
+      }else{
+        return`<tr class="${rc}" ${isHit?'onclick="pick('+r.no+',\'pc\')" style="cursor:pointer;"':''}>
+          <td>${r.no}</td><td style="font-size:8px;">${r.place.length>9?r.place.slice(0,9)+'…':r.place}</td>
+          <td style="font-family:monospace;">${serialDisp}</td>
+          <td>${r.mfgYear}</td>
+          <td>${judgeBadge(r.mfgYear,r.done)}</td></tr>`;
+      }
+    }).join("");
+  });
+  updateStats();
+}
+
+function updateStats(){
+  const done=data.filter(r=>r.done).length;
+  const remain=data.length-done;
+  const warn=data.filter(r=>!r.done&&age(r.mfgYear)>=10).length;
+  ids.forEach(id=>{
+    const d=document.getElementById(id+"-done");
+    const r=document.getElementById(id+"-remain");
+    const w=document.getElementById(id+"-warn");
+    if(d)d.textContent=done;
+    if(r)r.textContent=remain;
+    if(w)w.textContent=warn;
+  });
+  const sd=document.getElementById("sp-done");
+  const sr=document.getElementById("sp-remain");
+  if(sd)sd.textContent=done;
+  if(sr)sr.textContent=remain;
+}
+
+function setDisp(id,val){
+  const el=document.getElementById(id+"-disp");
+  if(!el)return;
+  const chars=(val+"___").slice(0,3).split("").join(" ");
+  el.textContent=chars;
+  el.style.color=val.length===3?"#1a3a5c":"#aab";
+}
+
+function setMsg(id,text,cls){
+  const el=document.getElementById(id+"-msg");
+  if(!el)return;
+  el.textContent=text;
+  el.className="msg-area "+(cls||"");
+}
+
+function lookup(id){
+  const s=state[id];
+  const hits=data.filter(r=>r.suffix===s&&!r.done);
+  if(hits.length===0){
+    const already=data.filter(r=>r.suffix===s&&r.done);
+    if(already.length>0){
+      setMsg(id,"No."+already.map(r=>r.no).join("・")+" 点検済み","msg-done");
+    }else{
+      setMsg(id,"台帳にありません","msg-err");
+    }
+    renderAll(null,id);
+    return;
+  }
+  if(hits.length===1){
+    markDone(hits[0],id);return;
+  }
+  setMsg(id,hits.length+"件ヒット — 製造年確認→行タップ","msg-warn");
+  renderAll(s,id);
+}
+
+function markDone(r,id){
+  lastDone[id]=r.no; r.done=true;
+  const a=age(r.mfgYear);
+  const cls=a>=10?"msg-err":a>=8?"msg-warn":"msg-ok";
+  const act=a>=10?"→ 耐圧試験必要！":a>=8?"→ 要注意（"+a+"年）":"→ 点検完了";
+  setMsg(id,"No."+r.no+" "+r.place+"\n"+act,cls);
+  state[id]=""; setDisp(id,"");
+  renderAll(null,id);
+}
+
+function pick(no,id){
+  const r=data.find(x=>x.no===no);
+  if(r&&!r.done)markDone(r,id);
+}
+
+function kp(id,c){
+  if(state[id].length>=3)return;
+  state[id]+=c; setDisp(id,state[id]);
+  if(state[id].length===3)lookup(id);
+}
+function kd(id){state[id]=state[id].slice(0,-1);setDisp(id,state[id]);setMsg(id,"","");}
+function kc(id){state[id]="";setDisp(id,"");setMsg(id,"","");renderAll(null,id);}
+function undo(id){
+  if(!lastDone[id])return;
+  const r=data.find(x=>x.no===lastDone[id]);
+  if(r){r.done=false;lastDone[id]=null;setMsg(id,"取消しました","msg-done");renderAll(null,id);}
+}
+
+function showSummary(id){
+  const done=data.filter(r=>r.done).length;
+  const remain=data.length-done;
+  const taiatu=data.filter(r=>age(r.mfgYear)>=10).length;
+  const panel=document.getElementById(id+"-summary");
+  if(panel){
+    panel.style.display="block";
+    document.getElementById(id+"-s1").textContent="点検完了："+done+"本 / 残り"+remain+"本";
+    document.getElementById(id+"-s2").textContent="耐圧試験対象："+taiatu+"本（2018年製以前）";
+    document.getElementById(id+"-s3").textContent="→ 見積りのご提案をお勧めします";
+  }
+}
+
+renderAll(null,null);
+</script>
