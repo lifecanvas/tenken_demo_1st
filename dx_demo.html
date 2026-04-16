@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>消防設備DX | INOUE WORKS</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B1A;
+    --yellow: #FFD53E;
+    --green: #2ECC71;
+    --dark: #1A1A2E;
+    --white: #FAFAFA;
+    --gray: #F0F0F0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,107,26,0.3) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,213,62,0.2) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite 2s;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+
+  .prototype-badge {
+    background: var(--orange);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 900;
+    color: var(--white);
+    text-align: center;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-title span {
+    color: var(--yellow);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(15px, 3vw, 20px);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .hero-subtitle strong {
+    color: var(--yellow);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+    letter-spacing: 2px;
+    animation: bounce 2s infinite;
+    z-index: 1;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== PAIN SECTION ===== */
+  .section {
+    padding: 80px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--orange);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-size: clamp(24px, 5vw, 40px);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 32px;
+  }
+
+  /* ===== PAIN CARDS ===== */
+  .pain-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .pain-card {
+    background: var(--gray);
+    border-left: 4px solid #ccc;
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pain-card::before {
+    content: attr(data-emoji);
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 32px;
+    opacity: 0.3;
+  }
+
+  /* ===== TRANSFORM SECTION ===== */
+  .transform-section {
+    background: var(--dark);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .transform-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .transform-section .section-title {
+    color: var(--white);
+  }
+
+  .arrow-big {
+    font-size: 60px;
+    margin: 32px 0;
+    animation: bounceDown 1.5s infinite;
+  }
+  @keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+
+  /* ===== DEMO TABLE ===== */
+  .demo-section {
+    padding: 80px 24px;
+    background: white;
+  }
+
+  .demo-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+    margin-top: 32px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 600px;
+  }
+
+  thead {
+    background: var(--orange);
+    color: white;
+  }
+
+  th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+  }
+
+  tr:nth-child(even) td { background: #fafafa; }
+  tr:hover td { background: #FFF5EE; transition: 0.2s; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .badge-ok {
+    background: #E8F8F0;
+    color: var(--green);
+  }
+
+  .badge-ng {
+    background: #FFE8E8;
+    color: #E74C3C;
+  }
+
+  .badge-year {
+    background: #FFF3CD;
+    color: #856404;
+  }
+
+  /* ===== VISION SECTION ===== */
+  .vision-section {
+    padding: 80px 24px;
+    background: linear-gradient(135deg, #FF6B1A 0%, #FFD53E 100%);
+  }
+
+  .vision-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .vision-section .section-label { color: rgba(255,255,255,0.8); }
+  .vision-section .section-title { color: white; }
+
+  .step-list {
+    display: grid;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .step-item {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    color: white;
+  }
+
+  .step-num {
+    background: white;
+    color: var(--orange);
+    font-weight: 900;
+    font-size: 18px;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-text strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .step-text span {
+    font-size: 13px;
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+
+  /* ===== CTA SECTION ===== */
+  .cta-section {
+    background: var(--dark);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .cta-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-section .section-title {
+    color: white;
+    margin-bottom: 16px;
+  }
+
+  .cta-desc {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #0088cc, #00aaff);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 30px rgba(0,136,204,0.4);
+    transition: all 0.3s;
+    animation: glowPulse 2s infinite;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,136,204,0.6);
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 8px 30px rgba(0,136,204,0.4); }
+    50% { box-shadow: 0 8px 40px rgba(0,136,204,0.7); }
+  }
+
+  .cta-email {
+    margin-top: 24px;
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+  }
+
+  .cta-email a {
+    color: var(--yellow);
+    text-decoration: none;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #111;
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--orange);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .footer-note {
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    width: 60px;
+    height: 4px;
+    background: var(--orange);
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="prototype-badge">🔥 PROTOTYPE — 試作品・実証実験募集中</div>
+  <h1 class="hero-title">
+    現場の職人が、<br>
+    <span>デジタルで強くなる。</span>
+  </h1>
+  <p class="hero-subtitle">
+    消防設備点検の<strong>xlsxを卒業</strong>して、<br>
+    地域の防災会社が本当の意味で<strong>頼られる存在</strong>へ。<br>
+    新潟から、一緒に変えていきませんか。
+  </p>
+  <p class="scroll-hint">↓ スクロール</p>
+</section>
+
+<!-- PAIN -->
+<div class="section">
+  <p class="section-label">現状の課題</p>
+  <div class="divider"></div>
+  <h2 class="section-title">こんな「当たり前」、<br>もう限界じゃないですか。</h2>
+  <div class="pain-grid">
+    <div class="pain-card" data-emoji="📄">毎回同じxlsxを手打ち。ミスが怖くて残業が増える。</div>
+    <div class="pain-card" data-emoji="💾">報告書がどこにあるか分からない。紛失したら再作成。</div>
+    <div class="pain-card" data-emoji="😓">若い人が入ってこない。デジタル化の話も後回しになる。</div>
+    <div class="pain-card" data-emoji="💰">技術はあるのに単価が上がらない。差別化できていない。</div>
+  </div>
+</div>
+
+<!-- TRANSFORM -->
+<div class="transform-section">
+  <div class="transform-inner">
+    <p class="section-label" style="color: rgba(255,165,80,0.8);">変化のイメージ</p>
+    <h2 class="section-title">xlsxが、こう変わります。</h2>
+    <div class="arrow-big">⬇️</div>
+  </div>
+</div>
+
+<!-- DEMO TABLE -->
+<div class="demo-section">
+  <div class="demo-inner">
+    <p class="section-label">デモデータ（架空施設）</p>
+    <div class="divider"></div>
+    <h2 class="section-title">消火器管理台帳<br><small style="font-size:16px; font-weight:400; color:#888;">スマホでも見やすく・検索できる</small></h2>
+
+    <div style="background:#FFF5EE; border-left: 4px solid var(--orange); padding: 12px 16px; border-radius: 6px; font-size: 13px; color: #666; margin-top: 16px;">
+      ※ 以下はすべて架空のデモデータです。実在の施設・個人とは関係ありません。
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>階</th>
+            <th>設置場所</th>
+            <th>種別</th>
+            <th>製造年</th>
+            <th>製造番号</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>1F</td><td>事務室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141134</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>2</td><td>1F</td><td>会議室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072625</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>3</td><td>1F</td><td>倉庫内</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141139</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>4</td><td>1F</td><td>玄関ホール</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072675</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>5</td><td>1F</td><td>給湯室前</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141148</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>6</td><td>2F</td><td>会議室B前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141158</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>7</td><td>2F</td><td>実習室内</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072606</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>8</td><td>2F</td><td>多目的ホール</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072610</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>9</td><td>3F</td><td>管理棟廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141086</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>10</td><td>3F</td><td>資料室前</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072613</td><td><span class="badge badge-ng">✗ 要確認</span></td></tr>
+          <tr><td>11</td><td>4F</td><td>講義室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072612</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>12</td><td>PH</td><td>屋上機械室</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072555</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="text-align:center; margin-top: 24px; color: #aaa; font-size: 13px;">
+      ↑ 横にスクロールできます。スマホでも全項目確認可。<br>
+      実際は60〜100本以上を一画面で管理できます。
+    </p>
+  </div>
+</div>
+
+<!-- VISION -->
+<div class="vision-section">
+  <div class="vision-inner">
+    <p class="section-label">目指すステップ</p>
+    <div class="divider" style="background: white;"></div>
+    <h2 class="section-title">防災会社が、地域の<br>DXパートナーになる。</h2>
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>点検記録のデジタル化</strong>
+          <span>xlsxをやめて、スマホで入力・報告書を自動生成。現場の手間を半分に。</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>自社VPS構築・社内DX</strong>
+          <span>GAFAMに依存しない自前サーバーを持つ。データは自分たちで守る。</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>顧客へのDX提案サービス化</strong>
+          <span>点検だけでなく、建物管理・IoT・監視カメラまでワンストップで。単価アップ。</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <strong>新潟から地域再生モデルへ</strong>
+          <span>地方の防災会社が稼げる・若者が来たくなる・地域が安全になる。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <p class="section-label" style="color: rgba(255,165,80,0.8);">興味がある方へ</p>
+    <h2 class="section-title">まず、話しましょう。<br>売り込みじゃないです。</h2>
+    <p class="cta-desc">
+      先着5〜10社限定で、実証実験パートナーを募集しています。<br>
+      一緒に使いながら育てる仲間を探しています。<br>
+      「どんなもの？」という気軽な話から大歓迎。
+    </p>
+    <a href="https://t.me/+fdTc2ku9KndmNTE1" class="cta-btn" target="_blank">
+      ✈️ Telegramグループに参加する
+    </a>
+    <p class="cta-email">
+      メールはこちら → <a href="mailto:inoueworks@gmail.com">inoueworks@gmail.com</a>
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">INOUE WORKS</div>
+  <p class="footer-note">
+    © 2026 INOUE WORKS<br>
+    本ページはプロトタイプです。掲載データはすべて架空のデモデータです。<br>
+    Relocal × 防災消防設備DX化 新潟 地域再生勉強会
+  </p>
+</footer>
+
+</body>
+</html>
