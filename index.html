@@ -18,42 +18,56 @@ body{background:#f0f4f8;min-height:100vh;display:flex;align-items:flex-start;jus
 .stat-l{font-size:11px;color:#666;margin-top:1px;}
 .input-row{display:flex;align-items:stretch;border-bottom:0.5px solid #dde3ea;}
 .disp-side{padding:8px 12px;background:#fff;display:flex;flex-direction:column;justify-content:center;border-right:0.5px solid #dde3ea;min-width:130px;}
-.disp-label{font-size:11px;color:#888;margin-bottom:3px;}
-.disp{font-family:'Courier New',monospace;font-size:28px;font-weight:500;letter-spacing:8px;color:#1a3a5c;}
+.disp-label{font-size:11px;color:#555;margin-bottom:3px;font-weight:500;}
+/* ① 修正：未入力時のグレーを#888→#444に濃く */
+.disp{font-family:'Courier New',monospace;font-size:32px;font-weight:700;letter-spacing:8px;color:#1a3a5c;}
+.disp.empty{color:#555;}
 .msg-side{flex:1;padding:8px 10px;display:flex;align-items:center;}
 #msg-box{font-size:13px;line-height:1.5;padding:7px 10px;border-radius:8px;width:100%;min-height:44px;}
 .msg-ok{background:#e6f4ea;color:#1e6e2e;}
 .msg-warn{background:#fff3cd;color:#856404;}
 .msg-err{background:#fde8e8;color:#9b1c1c;}
-.msg-done{background:#f0f0f0;color:#666;}
+.msg-done{background:#e0e0e0;color:#333;}
+/* ③ 代行モード時のメッセージ */
+.msg-proxy{background:#e8e0f8;color:#4a1a8c;}
 .bottom-area{display:flex;border-bottom:0.5px solid #dde3ea;}
 .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px;background:#f4f6f8;width:160px;flex-shrink:0;}
-.key{background:#fff;border:0.5px solid #c8d0da;border-radius:8px;font-size:22px;font-weight:500;padding:10px 0;cursor:pointer;text-align:center;color:#222;user-select:none;-webkit-tap-highlight-color:transparent;transition:background 0.08s,transform 0.07s;}
+.key{background:#fff;border:0.5px solid #c8d0da;border-radius:8px;font-size:22px;font-weight:400;padding:10px 0;cursor:pointer;text-align:center;color:#bbb;user-select:none;-webkit-tap-highlight-color:transparent;transition:background 0.08s,transform 0.07s;}
 .key:active{background:#d8eaf8;transform:scale(0.93);}
-.key-del{font-size:16px;color:#666;}
-.key-clr{font-size:13px;color:#c0392b;}
+.key-del{font-size:16px;color:#ccc;}
+.key-clr{font-size:13px;color:#e0a0a0;font-weight:600;}
 .action-side{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:8px 10px;border-left:0.5px solid #dde3ea;}
 .btn{width:100%;padding:10px 8px;font-size:14px;border-radius:8px;border:0.5px solid #c8d0da;background:#f4f6f8;color:#222;cursor:pointer;font-family:inherit;transition:background 0.1s,transform 0.07s;}
 .btn:active{transform:scale(0.97);}
-.btn-undo{font-size:13px;color:#666;}
+.btn-undo{font-size:13px;color:#555;}
 .btn-end{background:#1a3a5c;color:#fff;border-color:#1a3a5c;font-weight:500;}
+/* ③ 代行入力ボタン */
+.btn-proxy{background:#f3eeff;color:#4a1a8c;border-color:#c5aaf0;font-size:13px;}
+.btn-proxy.active{background:#4a1a8c;color:#fff;border-color:#4a1a8c;}
+.proxy-indicator{display:none;background:#4a1a8c;color:#fff;font-size:12px;padding:4px 10px;text-align:center;border-bottom:0.5px solid #dde3ea;}
+.proxy-indicator.show{display:block;}
 .tbl-wrap{overflow-y:auto;max-height:360px;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 th{background:#f4f6f8;padding:7px 10px;text-align:left;font-weight:500;color:#555;border-bottom:0.5px solid #dde3ea;position:sticky;top:0;}
 td{padding:7px 10px;border-bottom:0.5px solid #eee;color:#222;}
-tr.done td{color:#bbb;text-decoration:line-through;background:#f9f9f9;}
+tr.done td{color:#999;text-decoration:line-through;background:#f9f9f9;}
 tr.hit td{background:#e8f4fd;}
 .badge{font-size:11px;padding:2px 7px;border-radius:6px;white-space:nowrap;font-weight:500;}
 .b-ok{background:#e6f4ea;color:#1e6e2e;}
 .b-warn{background:#fff3cd;color:#856404;}
 .b-danger{background:#fde8e8;color:#9b1c1c;}
-.b-done{background:#f0f0f0;color:#aaa;}
+/* ② 修正：「済」バッジをダークに（薄グレー→濃グレー） */
+.b-done{background:#555;color:#fff;}
+/* ③ 代行済みバッジ */
+.b-proxy{background:#4a1a8c;color:#fff;}
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center;}
 .modal-bg.open{display:flex;}
-.modal{background:#fff;border-radius:14px;border:0.5px solid #dde3ea;padding:20px;width:90%;max-width:400px;}
-.modal-title{font-size:17px;font-weight:500;color:#1a3a5c;margin-bottom:14px;}
+.modal{background:#fff;border-radius:14px;border:0.5px solid #dde3ea;padding:16px;width:92%;max-width:600px;position:relative;}
+.modal-title{font-size:16px;font-weight:500;color:#1a3a5c;margin-bottom:10px;padding-right:32px;}
 .modal p{font-size:14px;line-height:2;color:#222;}
-.modal-close{margin-top:16px;width:100%;padding:10px;font-size:14px;font-family:inherit;background:#1a3a5c;color:#fff;border:none;border-radius:8px;cursor:pointer;}
+.modal-x{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(180,40,40,0.12);border:none;cursor:pointer;font-size:15px;color:#c0392b;line-height:28px;text-align:center;transition:background 0.1s;}
+.modal-x:hover{background:rgba(180,40,40,0.28);}
+.modal-close{margin-top:12px;width:100%;padding:10px;font-size:14px;font-family:inherit;background:#1a3a5c;color:#fff;border:none;border-radius:8px;cursor:pointer;}
 </style>
 </head>
 <body>
@@ -70,10 +84,14 @@ tr.hit td{background:#e8f4fd;}
     <div class="stat-box"><div class="stat-n" style="color:#888;">63</div><div class="stat-l">合計</div></div>
   </div>
 
+  <!-- ③ 代行モードインジケーター -->
+  <div class="proxy-indicator" id="proxy-bar">🔑 代行点検モード — 感知器担当者による入力中</div>
+
   <div class="input-row">
     <div class="disp-side">
       <div class="disp-label">下3桁を入力</div>
-      <div class="disp" id="disp">_ _ _</div>
+      <!-- ① 空の時はemptyクラスで濃いグレー表示 -->
+      <div class="disp empty" id="disp">_ _ _</div>
     </div>
     <div class="msg-side"><div id="msg-box"></div></div>
   </div>
@@ -95,6 +113,8 @@ tr.hit td{background:#e8f4fd;}
     </div>
     <div class="action-side">
       <button class="btn btn-undo" onclick="undo()">↩ 直前を取り消す</button>
+      <!-- ③ 代行入力トグルボタン -->
+      <button class="btn btn-proxy" id="btn-proxy" onclick="toggleProxy()">🔑 代行点検モード</button>
       <button class="btn" onclick="showList()">一覧確認</button>
       <button class="btn btn-end" onclick="showEnd()">点検終了</button>
     </div>
@@ -110,6 +130,7 @@ tr.hit td{background:#e8f4fd;}
 
 <div class="modal-bg" id="modal-list">
   <div class="modal">
+    <button class="modal-x" onclick="closeModal('modal-list')">✕</button>
     <div class="modal-title">一覧確認</div>
     <div id="modal-list-body"></div>
     <button class="modal-close" onclick="closeModal('modal-list')">閉じる</button>
@@ -118,6 +139,7 @@ tr.hit td{background:#e8f4fd;}
 
 <div class="modal-bg" id="modal-end">
   <div class="modal">
+    <button class="modal-x" onclick="closeModal('modal-end')">✕</button>
     <div class="modal-title">点検終了</div>
     <div id="modal-end-body"></div>
     <button class="modal-close" onclick="closeModal('modal-end')">閉じる</button>
@@ -160,13 +182,28 @@ const raw=[
   [61,"PH","特別教室棟","ハツタ",2019,"072565"],[62,"PH","実習棟","ハツタ",2019,"072555"],
   [63,"PH","実習棟","ハツタ",2019,"072617"]
 ];
-const data=raw.map(r=>({no:r[0],floor:r[1],place:r[2],mfgYear:r[4],serial:r[5],suffix:r[5].slice(-3),done:false}));
+
+// ③ proxyフラグを追加
+const data=raw.map(r=>({no:r[0],floor:r[1],place:r[2],mfgr:r[3],mfgYear:r[4],serial:r[5],suffix:r[5].slice(-3),done:false,proxy:false}));
 let cur="",lastNo=null;
+let proxyMode=false; // ③ 代行モードフラグ
+
+// ③ 代行モードトグル
+function toggleProxy(){
+  proxyMode=!proxyMode;
+  document.getElementById("btn-proxy").classList.toggle("active",proxyMode);
+  document.getElementById("proxy-bar").classList.toggle("show",proxyMode);
+  setMsg(proxyMode?"🔑 代行点検モード ON — 感知器担当者による代行入力":"通常点検モードに戻りました",proxyMode?"msg-proxy":"msg-done");
+}
 
 function age(y){return Y-y;}
-function badgeHtml(y,done){
-  if(done)return '<span class="badge b-done">済</span>';
-  const a=age(y);
+function badgeHtml(r){
+  if(r.done){
+    // ③ 代行フラグがあれば紫バッジ
+    if(r.proxy) return '<span class="badge b-proxy">🔑代行</span>';
+    return '<span class="badge b-done">済</span>'; // ② ダークバッジ
+  }
+  const a=age(r.mfgYear);
   if(a>=10)return '<span class="badge b-danger">耐圧必要</span>';
   if(a>=8)return '<span class="badge b-warn">要注意</span>';
   return '<span class="badge b-ok">正常</span>';
@@ -180,7 +217,7 @@ function render(hlSuffix){
       <td>${r.no}</td><td>${r.place}</td>
       <td style="font-family:monospace;">${sDisp}</td>
       <td>${r.mfgYear}</td>
-      <td>${badgeHtml(r.mfgYear,r.done)}</td></tr>`;
+      <td>${badgeHtml(r)}</td></tr>`;
   }).join("");
   const done=data.filter(r=>r.done).length;
   document.getElementById("s-done").textContent=done;
@@ -189,8 +226,12 @@ function render(hlSuffix){
 }
 function setDisp(){
   const el=document.getElementById("disp");
-  el.textContent=(cur+"___").slice(0,3).split("").join(" ");
-  el.style.color=cur.length===3?"#1a3a5c":"#aab";
+  const filled=(cur+"___").slice(0,3).split("").join(" ");
+  el.textContent=filled;
+  // ① 入力中は濃い青、空は濃いグレー#444
+  if(cur.length===3){el.style.color="#1a3a5c";el.classList.remove("empty");}
+  else if(cur.length>0){el.style.color="#1a3a5c";el.classList.remove("empty");}
+  else{el.style.color="";el.classList.add("empty");}
 }
 function setMsg(text,cls){
   const el=document.getElementById("msg-box");
@@ -210,8 +251,11 @@ function lookup(){
 }
 function markDone(r){
   lastNo=r.no;r.done=true;
+  r.proxy=proxyMode; // ③ 代行フラグ記録
   const a=age(r.mfgYear);
-  setMsg("No."+r.no+" "+r.place+(a>=10?" → 耐圧試験が必要":a>=8?" → 要注意（"+a+"年経過）":" → 点検完了"),a>=10?"msg-err":a>=8?"msg-warn":"msg-ok");
+  const proxyTxt=proxyMode?" [代行入力]":"";
+  setMsg("No."+r.no+" "+r.place+proxyTxt+(a>=10?" → 耐圧試験が必要":a>=8?" → 要注意（"+a+"年経過）":" → 点検完了"),
+    a>=10?"msg-err":a>=8?"msg-warn":proxyMode?"msg-proxy":"msg-ok");
   cur="";setDisp();render(null);
 }
 function pick(no){const r=data.find(x=>x.no===no);if(r&&!r.done)markDone(r);}
@@ -221,13 +265,46 @@ function kc(){cur="";setDisp();setMsg("","");render(null);}
 function undo(){
   if(!lastNo)return;
   const r=data.find(x=>x.no===lastNo);
-  if(r){r.done=false;lastNo=null;setMsg("取り消しました","msg-done");render(null);}
+  if(r){r.done=false;r.proxy=false;lastNo=null;setMsg("取り消しました","msg-done");render(null);}
 }
 function showList(){
   const undone=data.filter(r=>!r.done);
-  document.getElementById("modal-list-body").innerHTML=undone.length===0
-    ?'<p>全本の点検が完了しています！</p>'
-    :`<p>未点検：${undone.length}本</p><p style="margin-top:8px;font-size:12px;color:#888;">${undone.map(r=>"No."+r.no+" "+r.place).join("　")}</p>`;
+  const proxyDone=data.filter(r=>r.done&&r.proxy);
+  let html="";
+  if(undone.length===0){
+    html='<p style="color:#1e6e2e;font-weight:500;">✅ 全本の点検が完了しています！</p>';
+  } else {
+    html=`<p style="margin-bottom:8px;font-size:13px;color:#555;">未点検：<strong style="color:#e65100;">${undone.length}本</strong>${proxyDone.length?' ／ 🔑代行済：<strong style="color:#4a1a8c;">'+proxyDone.length+'本</strong>':''}</p>`;
+    html+=`<div style="overflow-y:auto;max-height:300px;border:0.5px solid #dde3ea;border-radius:8px;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:#f4f6f8;">
+          <th style="padding:6px 6px;text-align:left;color:#555;font-weight:500;border-bottom:0.5px solid #dde3ea;position:sticky;top:0;background:#f4f6f8;white-space:nowrap;">No.</th>
+          <th style="padding:6px 4px;text-align:left;color:#555;font-weight:500;border-bottom:0.5px solid #dde3ea;position:sticky;top:0;background:#f4f6f8;">階</th>
+          <th style="padding:6px 6px;text-align:left;color:#555;font-weight:500;border-bottom:0.5px solid #dde3ea;position:sticky;top:0;background:#f4f6f8;">場所</th>
+          <th style="padding:6px 6px;text-align:left;color:#555;font-weight:500;border-bottom:0.5px solid #dde3ea;position:sticky;top:0;background:#f4f6f8;white-space:nowrap;">メーカー</th>
+          <th style="padding:6px 6px;text-align:left;color:#555;font-weight:500;border-bottom:0.5px solid #dde3ea;position:sticky;top:0;background:#f4f6f8;white-space:nowrap;">番号</th>
+          <th style="padding:6px 4px;text-align:right;color:#555;font-weight:500;border-bottom:0.5px solid #dde3ea;position:sticky;top:0;background:#f4f6f8;white-space:nowrap;">製造年</th>
+          <th style="padding:6px 6px;text-align:center;color:#555;font-weight:500;border-bottom:0.5px solid #dde3ea;position:sticky;top:0;background:#f4f6f8;">状態</th>
+        </tr></thead>
+        <tbody>${undone.map((r,i)=>{
+          const a=age(r.mfgYear);
+          const bg=i%2===0?"#fff":"#fafbfc";
+          const badge=a>=10?'<span class="badge b-danger">耐圧必要</span>':a>=8?'<span class="badge b-warn">要注意</span>':'<span class="badge b-ok">正常</span>';
+          const sfx=r.serial.slice(-3);
+          const serialDisp=r.serial.slice(0,-3)+'<strong style="color:#1a6fce;letter-spacing:1px;">'+sfx+'</strong>';
+          return`<tr style="background:${bg};">
+            <td style="padding:6px 6px;color:#999;font-size:11px;">${r.no}</td>
+            <td style="padding:6px 4px;color:#999;font-size:11px;">${r.floor}</td>
+            <td style="padding:6px 6px;color:#222;font-weight:500;">${r.place}</td>
+            <td style="padding:6px 6px;color:#555;font-size:12px;">${r.mfgr||"ハツタ"}</td>
+            <td style="padding:6px 6px;font-family:monospace;font-size:12px;">${serialDisp}</td>
+            <td style="padding:6px 4px;text-align:right;color:#666;font-family:monospace;font-size:12px;">${r.mfgYear}</td>
+            <td style="padding:6px 6px;text-align:center;">${badge}</td>
+          </tr>`;
+        }).join("")}</tbody>
+      </table></div>`;
+  }
+  document.getElementById("modal-list-body").innerHTML=html;
   document.getElementById("modal-list").classList.add("open");
 }
 function showEnd(){
@@ -235,8 +312,10 @@ function showEnd(){
   const taiatu=data.filter(r=>age(r.mfgYear)>=10).length;
   const yocyu=data.filter(r=>age(r.mfgYear)>=8&&age(r.mfgYear)<10).length;
   const undone=data.length-done;
+  const proxyDone=data.filter(r=>r.done&&r.proxy).length;
   document.getElementById("modal-end-body").innerHTML=
     `<p>点検済み：${done}本 ／ 未点検：${undone}本</p>
+     ${proxyDone?`<p style="color:#4a1a8c;font-size:13px;">🔑 代行入力：${proxyDone}本</p>`:""}
      <p>耐圧試験が必要：${taiatu}本</p>
      <p>要注意（8年以上）：${yocyu}本</p>`+
     (undone>0
