@@ -4,35 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>消防設備DX | INOUE WORKS</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --orange: #FF6B1A;
-    --yellow: #FFD53E;
-    --green: #2ECC71;
-    --dark: #1A1A2E;
-    --white: #FAFAFA;
-    --gray: #F0F0F0;
+    --navy:    #1B2A4A;
+    --navy2:   #243558;
+    --gold:    #C9A84C;
+    --gold2:   #E8C96A;
+    --green:   #2D6A4F;
+    --cream:   #F5F3EE;
+    --white:   #FDFCFA;
+    --gray:    #8A8A8A;
+    --light:   #E8E4DC;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Noto Sans JP', sans-serif;
     background: var(--white);
-    color: var(--dark);
+    color: var(--navy);
     overflow-x: hidden;
   }
 
   /* ===== HERO ===== */
   .hero {
-    background: var(--dark);
+    background: var(--navy);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px 24px;
+    padding: 60px 32px;
     position: relative;
     overflow: hidden;
   }
@@ -40,539 +44,562 @@
   .hero::before {
     content: '';
     position: absolute;
-    top: -100px; left: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(255,107,26,0.3) 0%, transparent 70%);
-    animation: pulse 4s ease-in-out infinite;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 30%, rgba(45,106,79,0.06) 0%, transparent 60%);
   }
+
   .hero::after {
     content: '';
     position: absolute;
-    bottom: -80px; right: -80px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(255,213,62,0.2) 0%, transparent 70%);
-    animation: pulse 4s ease-in-out infinite 2s;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.4;
   }
 
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.1); opacity: 1; }
-  }
-
-  .prototype-badge {
-    background: var(--orange);
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-bottom: 24px;
+  .hero-badge {
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    padding: 7px 20px;
+    margin-bottom: 48px;
     position: relative;
     z-index: 1;
-    animation: fadeDown 0.6s ease both;
+    animation: fadeIn 1s ease both;
   }
 
   .hero-title {
-    font-size: clamp(36px, 8vw, 72px);
-    font-weight: 900;
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(30px, 5vw, 54px);
+    font-weight: 600;
     color: var(--white);
     text-align: center;
-    line-height: 1.1;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
     position: relative;
     z-index: 1;
-    animation: fadeUp 0.8s ease 0.2s both;
+    animation: fadeIn 1s ease 0.3s both;
   }
 
-  .hero-title span {
-    color: var(--yellow);
-    display: block;
+  .hero-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 40px auto;
+    position: relative;
+    z-index: 1;
+    animation: expandLine 1s ease 0.6s both;
+  }
+
+  @keyframes expandLine {
+    from { width: 0; opacity: 0; }
+    to { width: 40px; opacity: 1; }
   }
 
   .hero-subtitle {
-    font-size: clamp(15px, 3vw, 20px);
-    color: rgba(255,255,255,0.7);
+    font-size: clamp(13px, 2vw, 15px);
+    color: rgba(253,252,250,0.6);
     text-align: center;
-    margin-top: 20px;
-    line-height: 1.8;
+    line-height: 2.4;
+    letter-spacing: 0.08em;
+    font-weight: 300;
     position: relative;
     z-index: 1;
-    animation: fadeUp 0.8s ease 0.4s both;
+    animation: fadeIn 1s ease 0.8s both;
   }
 
   .hero-subtitle strong {
-    color: var(--yellow);
+    color: rgba(253,252,250,0.88);
+    font-weight: 500;
   }
 
   .scroll-hint {
     position: absolute;
-    bottom: 32px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    color: rgba(255,255,255,0.4);
-    font-size: 13px;
-    letter-spacing: 2px;
-    animation: bounce 2s infinite;
+    color: rgba(253,252,250,0.2);
+    font-size: 10px;
+    letter-spacing: 4px;
     z-index: 1;
+    animation: fadeIn 1s ease 1.2s both, nudge 3s ease 2s infinite;
   }
 
-  @keyframes bounce {
+  @keyframes nudge {
     0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
+    50% { transform: translateX(-50%) translateY(6px); }
   }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ===== PAIN SECTION ===== */
-  .section {
-    padding: 80px 24px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--orange);
-    margin-bottom: 12px;
+  /* ===== COMMON ===== */
+  .section-en {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    font-weight: 300;
+    margin-bottom: 8px;
     text-transform: uppercase;
   }
 
   .section-title {
-    font-size: clamp(24px, 5vw, 40px);
-    font-weight: 900;
-    line-height: 1.3;
-    margin-bottom: 32px;
-  }
-
-  /* ===== PAIN CARDS ===== */
-  .pain-grid {
-    display: grid;
-    gap: 16px;
-  }
-
-  .pain-card {
-    background: var(--gray);
-    border-left: 4px solid #ccc;
-    padding: 20px 24px;
-    border-radius: 8px;
-    font-size: 15px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 600;
     line-height: 1.7;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  .section-line {
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 48px;
+  }
+
+  /* ===== PAIN ===== */
+  .pain-section {
+    background: var(--cream);
+    padding: 100px 32px;
+  }
+
+  .pain-inner { max-width: 860px; margin: 0 auto; }
+
+  .pain-list {
+    border: 1px solid var(--light);
+  }
+
+  .pain-item {
+    background: var(--white);
+    padding: 28px 36px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    border-bottom: 1px solid var(--light);
+    transition: background 0.3s;
+  }
+
+  .pain-item:last-child { border-bottom: none; }
+  .pain-item:hover { background: #F9F7F2; }
+
+  .pain-num {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    font-weight: 300;
+    min-width: 28px;
+    padding-top: 3px;
+  }
+
+  .pain-text {
+    font-size: 14px;
+    line-height: 2;
     color: #555;
-    position: relative;
-    overflow: hidden;
+    font-weight: 300;
+    letter-spacing: 0.04em;
   }
 
-  .pain-card::before {
-    content: attr(data-emoji);
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 32px;
-    opacity: 0.3;
-  }
-
-  /* ===== TRANSFORM SECTION ===== */
-  .transform-section {
-    background: var(--dark);
-    padding: 80px 24px;
-    text-align: center;
-  }
-
-  .transform-inner {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .transform-section .section-title {
-    color: var(--white);
-  }
-
-  .arrow-big {
-    font-size: 60px;
-    margin: 32px 0;
-    animation: bounceDown 1.5s infinite;
-  }
-  @keyframes bounceDown {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(10px); }
-  }
-
-  /* ===== DEMO TABLE ===== */
+  /* ===== DEMO ===== */
   .demo-section {
-    padding: 80px 24px;
-    background: white;
+    padding: 100px 32px;
+    background: var(--white);
   }
 
-  .demo-inner {
-    max-width: 900px;
-    margin: 0 auto;
+  .demo-inner { max-width: 960px; margin: 0 auto; }
+
+  .demo-note {
+    border-left: 2px solid var(--gold);
+    padding: 10px 16px;
+    font-size: 12px;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    margin-bottom: 32px;
+    font-weight: 300;
   }
 
   .table-wrap {
     overflow-x: auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
-    margin-top: 32px;
+    border: 1px solid var(--light);
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
-    min-width: 600px;
+    font-size: 13px;
+    min-width: 640px;
   }
 
-  thead {
-    background: var(--orange);
-    color: white;
-  }
+  thead { background: var(--navy); }
 
   th {
-    padding: 14px 16px;
+    padding: 16px 20px;
     text-align: left;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.5px;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(253,252,250,0.6);
+    text-transform: uppercase;
   }
 
   td {
-    padding: 14px 16px;
-    border-bottom: 1px solid #eee;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--light);
+    color: #333;
+    font-weight: 300;
+    letter-spacing: 0.03em;
   }
 
-  tr:nth-child(even) td { background: #fafafa; }
-  tr:hover td { background: #FFF5EE; transition: 0.2s; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #FAFAF7; transition: 0.2s; }
 
   .badge {
     display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
+    padding: 2px 10px;
+    font-size: 11px;
+    letter-spacing: 1px;
   }
 
   .badge-ok {
-    background: #E8F8F0;
+    background: rgba(45,106,79,0.1);
     color: var(--green);
+    border: 1px solid rgba(45,106,79,0.2);
   }
 
   .badge-ng {
-    background: #FFE8E8;
-    color: #E74C3C;
+    background: rgba(180,50,50,0.08);
+    color: #B43232;
+    border: 1px solid rgba(180,50,50,0.2);
   }
 
   .badge-year {
-    background: #FFF3CD;
-    color: #856404;
+    background: rgba(201,168,76,0.1);
+    color: #8A6A20;
+    border: 1px solid rgba(201,168,76,0.25);
   }
 
-  /* ===== VISION SECTION ===== */
+  /* ===== VISION ===== */
   .vision-section {
-    padding: 80px 24px;
-    background: linear-gradient(135deg, #FF6B1A 0%, #FFD53E 100%);
+    background: var(--navy);
+    padding: 100px 32px;
+    position: relative;
+    overflow: hidden;
   }
 
-  .vision-inner {
-    max-width: 800px;
-    margin: 0 auto;
+  .vision-section::before,
+  .vision-section::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
   }
 
-  .vision-section .section-label { color: rgba(255,255,255,0.8); }
-  .vision-section .section-title { color: white; }
+  .vision-section::before { top: 0; }
+  .vision-section::after { bottom: 0; }
 
-  .step-list {
-    display: grid;
-    gap: 16px;
-    margin-top: 32px;
-  }
+  .vision-inner { max-width: 860px; margin: 0 auto; }
+  .vision-section .section-title { color: var(--white); }
+  .vision-section .section-line { background: var(--gold); }
+
+  .step-list { border: 1px solid rgba(201,168,76,0.15); }
 
   .step-item {
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 20px 24px;
+    padding: 36px 40px;
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-    color: white;
+    gap: 32px;
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    transition: background 0.3s;
   }
 
+  .step-item:last-child { border-bottom: none; }
+  .step-item:hover { background: rgba(201,168,76,0.03); }
+
   .step-num {
-    background: white;
-    color: var(--orange);
-    font-weight: 900;
-    font-size: 18px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--gold);
+    opacity: 0.5;
     min-width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    line-height: 1;
+    padding-top: 4px;
   }
 
   .step-text strong {
     display: block;
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    font-family: 'Noto Serif JP', serif;
   }
 
   .step-text span {
     font-size: 13px;
-    opacity: 0.85;
-    line-height: 1.6;
+    color: rgba(253,252,250,0.5);
+    line-height: 2;
+    font-weight: 300;
+    letter-spacing: 0.04em;
   }
 
-  /* ===== CTA SECTION ===== */
+  /* ===== CTA ===== */
   .cta-section {
-    background: var(--dark);
-    padding: 80px 24px;
+    background: var(--cream);
+    padding: 100px 32px;
     text-align: center;
   }
 
-  .cta-inner {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .cta-section .section-title {
-    color: white;
-    margin-bottom: 16px;
-  }
+  .cta-inner { max-width: 640px; margin: 0 auto; }
 
   .cta-desc {
-    color: rgba(255,255,255,0.6);
-    font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 40px;
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 2.4;
+    margin-bottom: 56px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
   }
 
   .cta-btn {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    background: linear-gradient(135deg, #0088cc, #00aaff);
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 18px 40px;
-    border-radius: 50px;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    padding: 18px 48px;
     text-decoration: none;
-    box-shadow: 0 8px 30px rgba(0,136,204,0.4);
-    transition: all 0.3s;
-    animation: glowPulse 2s infinite;
+    border: 1px solid rgba(201,168,76,0.25);
+    transition: all 0.4s;
   }
 
   .cta-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0,136,204,0.6);
+    background: var(--navy2);
+    border-color: var(--gold);
+    color: var(--gold);
   }
 
-  @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 8px 30px rgba(0,136,204,0.4); }
-    50% { box-shadow: 0 8px 40px rgba(0,136,204,0.7); }
+  .cta-divider {
+    width: 1px;
+    height: 48px;
+    background: var(--light);
+    margin: 40px auto;
   }
 
   .cta-email {
-    margin-top: 24px;
-    color: rgba(255,255,255,0.4);
-    font-size: 13px;
+    color: var(--gray);
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 300;
   }
 
   .cta-email a {
-    color: var(--yellow);
+    color: var(--navy);
     text-decoration: none;
+    border-bottom: 1px solid var(--light);
+    padding-bottom: 1px;
+    transition: border-color 0.3s;
   }
+
+  .cta-email a:hover { border-color: var(--gold); }
 
   /* ===== FOOTER ===== */
   footer {
-    background: #111;
-    padding: 32px 24px;
+    background: var(--navy);
+    padding: 56px 32px;
     text-align: center;
+    position: relative;
+  }
+
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+  }
+
+  .footer-logo img {
+    height: 32px;
+    opacity: 0.8;
+    filter: brightness(0) invert(1);
+    margin-bottom: 12px;
   }
 
   .footer-tagline {
-    color: rgba(255,255,255,0.6);
-    font-size: 14px;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-    font-style: italic;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 300;
+    margin-bottom: 24px;
+    font-family: 'Noto Serif JP', serif;
+    opacity: 0.8;
   }
 
   .footer-note {
-    color: rgba(255,255,255,0.3);
-    font-size: 12px;
-    line-height: 1.8;
-  }
-
-  /* ===== DIVIDER ===== */
-  .divider {
-    width: 60px;
-    height: 4px;
-    background: var(--orange);
-    border-radius: 2px;
-    margin-bottom: 24px;
+    color: rgba(253,252,250,0.18);
+    font-size: 11px;
+    line-height: 2.2;
+    letter-spacing: 0.05em;
+    font-weight: 300;
   }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="prototype-badge">🔥 PROTOTYPE — 試作品・実証実験募集中</div>
+  <div class="hero-badge">PROTOTYPE — 試作品・実証実験募集中</div>
   <h1 class="hero-title">
-    現場の職人が、<br>
-    <span>デジタルで強くなる。</span>
+    現場の職人・作業員を、<br>
+    <em>デジタルで助ける。</em>
   </h1>
+  <div class="hero-line"></div>
   <p class="hero-subtitle">
-    消防設備点検の<strong>xlsxを卒業</strong>して、<br>
-    地域の防災会社が本当の意味で<strong>頼られる存在</strong>へ。<br>
-    新潟から、一緒に変えていきませんか。
+    消防設備点検の<strong>Office・xlsxを卒業</strong>して、<br>
+    地域の防災会社が本当の意味で<strong>地域に根ざした頼られる存在</strong>へ。<br>
+    新潟から一緒に作り、<strong>「未来」を変えて</strong>いきませんか。
   </p>
-  <p class="scroll-hint">↓ スクロール</p>
+  <p class="scroll-hint">scroll</p>
 </section>
 
-<!-- PAIN -->
-<div class="section">
-  <p class="section-label">現状の課題</p>
-  <div class="divider"></div>
-  <h2 class="section-title">こんな「当たり前」、<br>もう限界じゃないですか。</h2>
-  <div class="pain-grid">
-    <div class="pain-card" data-emoji="📄">毎回同じxlsxを手打ち。ミスが怖くて残業が増える。</div>
-    <div class="pain-card" data-emoji="💾">報告書がどこにあるか分からない。紛失したら再作成。</div>
-    <div class="pain-card" data-emoji="😓">若い人が入ってこない。デジタル化の話も後回しになる。</div>
-    <div class="pain-card" data-emoji="💰">技術はあるのに単価が上がらない。差別化できていない。</div>
+<div class="pain-section">
+  <div class="pain-inner">
+    <p class="section-en">Current Issues</p>
+    <h2 class="section-title">こんな「当たり前」、<br>もう限界ではないでしょうか。</h2>
+    <div class="section-line"></div>
+    <div class="pain-list">
+      <div class="pain-item">
+        <span class="pain-num">01</span>
+        <p class="pain-text">毎回同じxlsxを手打ち。ミスが怖くて帰社後も残業が増える。</p>
+      </div>
+      <div class="pain-item">
+        <span class="pain-num">02</span>
+        <p class="pain-text">報告書がどこにあるか分からない。紛失したら一から再作成。</p>
+      </div>
+      <div class="pain-item">
+        <span class="pain-num">03</span>
+        <p class="pain-text">若い人が入ってこない。デジタル化の話も後回しになり続けている。</p>
+      </div>
+      <div class="pain-item">
+        <span class="pain-num">04</span>
+        <p class="pain-text">技術はあるのに単価が上がらない。差別化できていない。</p>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- TRANSFORM -->
-<div class="transform-section">
-  <div class="transform-inner">
-    <p class="section-label" style="color: rgba(255,165,80,0.8);">変化のイメージ</p>
-    <h2 class="section-title">xlsxが、こう変わります。</h2>
-    <div class="arrow-big">⬇️</div>
-  </div>
-</div>
-
-<!-- DEMO TABLE -->
 <div class="demo-section">
   <div class="demo-inner">
-    <p class="section-label">デモデータ（架空施設）</p>
-    <div class="divider"></div>
-    <h2 class="section-title">消火器管理台帳<br><small style="font-size:16px; font-weight:400; color:#888;">スマホでも見やすく・検索できる</small></h2>
-
-    <div style="background:#FFF5EE; border-left: 4px solid var(--orange); padding: 12px 16px; border-radius: 6px; font-size: 13px; color: #666; margin-top: 16px;">
-      ※ 以下はすべて架空のデモデータです。実在の施設・個人とは関係ありません。
-    </div>
-
+    <p class="section-en">Demo Data</p>
+    <h2 class="section-title">消火器管理台帳</h2>
+    <div class="section-line"></div>
+    <p class="demo-note">以下はすべて架空のデモデータです。実在の施設・個人とは関係ありません。タブレット・スマホでも全項目確認できます。</p>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>No.</th>
-            <th>階</th>
-            <th>設置場所</th>
-            <th>種別</th>
-            <th>製造年</th>
-            <th>製造番号</th>
-            <th>判定</th>
+            <th>No.</th><th>階</th><th>設置場所</th><th>種別</th><th>製造年</th><th>製造番号</th><th>判定</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>1</td><td>1F</td><td>事務室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141134</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>2</td><td>1F</td><td>会議室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072625</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>3</td><td>1F</td><td>倉庫内</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141139</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>4</td><td>1F</td><td>玄関ホール</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072675</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>5</td><td>1F</td><td>給湯室前</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141148</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>6</td><td>2F</td><td>会議室B前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141158</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>7</td><td>2F</td><td>実習室内</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072606</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>8</td><td>2F</td><td>多目的ホール</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072610</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>9</td><td>3F</td><td>管理棟廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141086</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>10</td><td>3F</td><td>資料室前</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072613</td><td><span class="badge badge-ng">✗ 要確認</span></td></tr>
-          <tr><td>11</td><td>4F</td><td>講義室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072612</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
-          <tr><td>12</td><td>PH</td><td>屋上機械室</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072555</td><td><span class="badge badge-ok">✓ 良</span></td></tr>
+          <tr><td>01</td><td>1F</td><td>事務室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141134</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>02</td><td>1F</td><td>会議室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072625</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>03</td><td>1F</td><td>倉庫内</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141139</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>04</td><td>1F</td><td>玄関ホール</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072675</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>05</td><td>1F</td><td>給湯室前</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141148</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>06</td><td>2F</td><td>会議室B前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141158</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>07</td><td>2F</td><td>実習室内</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072606</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>08</td><td>2F</td><td>多目的ホール</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072610</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>09</td><td>3F</td><td>管理棟廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2018</span></td><td>A-141086</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>10</td><td>3F</td><td>資料室前</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072613</td><td><span class="badge badge-ng">要確認</span></td></tr>
+          <tr><td>11</td><td>4F</td><td>講義室前廊下</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072612</td><td><span class="badge badge-ok">良</span></td></tr>
+          <tr><td>12</td><td>PH</td><td>屋上機械室</td><td>粉末10型蓄圧式</td><td><span class="badge badge-year">2019</span></td><td>A-072555</td><td><span class="badge badge-ok">良</span></td></tr>
         </tbody>
       </table>
     </div>
-
-    <p style="text-align:center; margin-top: 24px; color: #aaa; font-size: 13px;">
-      ↑ 横にスクロールできます。スマホでも全項目確認可。<br>
-      実際は60〜100本以上を一画面で管理できます。
-    </p>
   </div>
 </div>
 
-<!-- VISION -->
 <div class="vision-section">
   <div class="vision-inner">
-    <p class="section-label">目指すステップ</p>
-    <div class="divider" style="background: white;"></div>
-    <h2 class="section-title">防災会社が、地域の<br>DXパートナーになる。</h2>
+    <p class="section-en">Our Vision</p>
+    <h2 class="section-title">防災会社が、これからは<br>「地域の総合防災DXパートナー」になる。</h2>
+    <div class="section-line"></div>
     <div class="step-list">
       <div class="step-item">
-        <div class="step-num">1</div>
+        <div class="step-num">I</div>
         <div class="step-text">
           <strong>点検記録のデジタル化</strong>
-          <span>xlsxをやめて、スマホで入力・報告書を自動生成。現場の手間を半分に。</span>
+          <span>xlsxをやめて、スマホやタブレットで現場入力・報告書を自動生成。現場と帰社後の手間を半分に。</span>
         </div>
       </div>
       <div class="step-item">
-        <div class="step-num">2</div>
+        <div class="step-num">II</div>
         <div class="step-text">
           <strong>自社VPS構築・社内DX</strong>
-          <span>GAFAMに依存しない自前サーバーを持つ。データは自分たちで守る。</span>
+          <span>GAFAMに依存しない自前サーバーを持ち、データは自分たちで作り守る。触って慣れて顧客にも提案。</span>
         </div>
       </div>
       <div class="step-item">
-        <div class="step-num">3</div>
+        <div class="step-num">III</div>
         <div class="step-text">
           <strong>顧客へのDX提案サービス化</strong>
-          <span>点検だけでなく、建物管理・IoT・監視カメラまでワンストップで。単価アップ。</span>
+          <span>点検だけでなく、建物管理・IoT・監視カメラまで総合的にワンストップで相談される会社に。単価アップで利益率を改善。</span>
         </div>
       </div>
       <div class="step-item">
-        <div class="step-num">4</div>
+        <div class="step-num">IV</div>
         <div class="step-text">
           <strong>新潟から地域再生モデルへ</strong>
-          <span>地方の防災会社が稼げる・若者が来たくなる・地域が安全になる。</span>
+          <span>地方の防災会社が適正に稼げる・若者が来たくなる・地域でお互い顔の見える信頼が安全になる。</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- CTA -->
 <div class="cta-section">
   <div class="cta-inner">
-    <p class="section-label" style="color: rgba(255,165,80,0.8);">興味がある方へ</p>
-    <h2 class="section-title">まず、話しましょう。<br>売り込みじゃないです。</h2>
+    <p class="section-en">Join Us</p>
+    <h2 class="section-title">一緒に作りましょう。<br>これは始まりの一歩です。</h2>
+    <div class="section-line" style="margin: 16px auto 40px;"></div>
     <p class="cta-desc">
       先着5〜10社限定で、実証実験パートナーを募集しています。<br>
-      一緒に使いながら育てる仲間を探しています。<br>
-      「どんなもの？」という気軽な話から大歓迎。
+      売り込みではありません。使いながら一緒に育てる仲間を探しています。<br>
+      「どんなもの？」という気軽なご連絡から大歓迎です。
     </p>
     <a href="https://t.me/+fdTc2ku9KndmNTE1" class="cta-btn" target="_blank">
-      ✈️ Telegramグループに参加する
+      Telegram グループに参加する
     </a>
+    <div class="cta-divider"></div>
     <p class="cta-email">
-      メールはこちら → <a href="mailto:inoueworks@gmail.com">inoueworks@gmail.com</a>
+      メールでのお問い合わせ &nbsp;→&nbsp;
+      <a href="mailto:inoueworks@gmail.com">inoueworks@gmail.com</a>
     </p>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <img src="logo.webp" alt="INOUE WORKS" style="height:48px; margin-bottom:12px; opacity:0.9;">
+  <div class="footer-logo">
+    <img src="logo.webp" alt="INOUE WORKS">
+  </div>
   <p class="footer-tagline">耕そう　地域の宝を再発見</p>
   <p class="footer-note">
     © 2026 INOUE WORKS All Rights Reserved<br>
